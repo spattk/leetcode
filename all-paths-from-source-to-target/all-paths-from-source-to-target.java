@@ -3,23 +3,20 @@ class Solution {
     
     public void allPathUtil(int[][] graph, int start, List<Integer> currentPath, int n) {
         if (start == n-1){
-            currentPath.add(start);
-            List<Integer> temp = new ArrayList<>();
-            temp.addAll(currentPath);
-            result.add(temp);
-            currentPath.remove(new Integer(start));
+            result.add(new ArrayList<>(currentPath));
             return;
         }
-        for(int i=0;i<graph[start].length;i++){
-            currentPath.add(start);
-            allPathUtil(graph, graph[start][i], currentPath, n);
-            currentPath.remove(new Integer(start));
-            // currentPath.remove(currentPath.size()-1);
+        for( int v: graph[start]) {
+            currentPath.add(v);
+            allPathUtil(graph, v, currentPath, n);
+            currentPath.remove(new Integer(v));
         }
     }
     public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
         result = new ArrayList<>();
-        allPathUtil(graph, 0, new ArrayList<>(), graph.length);
+        List<Integer> path = new ArrayList<>();
+        path.add(0);
+        allPathUtil(graph, 0, path, graph.length);
         return result;
     }
 }

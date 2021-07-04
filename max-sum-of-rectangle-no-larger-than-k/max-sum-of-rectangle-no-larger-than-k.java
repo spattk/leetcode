@@ -12,6 +12,9 @@ class Solution {
                     colSum[col] += matrix[j][col];
                 }
                 result = Math.max(result, find(colSum, k));
+                if (result == k){
+                    return result;
+                }
             }
         }
         

@@ -1,35 +1,28 @@
 class Solution {
-    public int[][] convert(Stack<int[]> st){
-        int n = st.size();
-        int[][] result = new int[n][2];
-        for(int i=n-1;i>=0;i--){
-            result[i] = st.pop();
-        }
-        
-        return result;
-    }
     
     public int[][] merge(int[][] intervals) {
         
-        Arrays.sort(intervals, new Comparator<int[]>(){
-            public int compare(int[] a, int [] b){
-                return Integer.compare(a[0], b[0]);
-            }
-        });
-        Stack<int[]> st = new Stack<>();
-        st.add(intervals[0]);
-        
+        Arrays.sort(intervals, (a,b)->Integer.compare(a[0], b[0]));
         int n = intervals.length;
+        if(n<=1)
+            return intervals;
+        
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+        List<int[]> result= new ArrayList<>();
+        
         for(int i=1;i<n;i++){
-            if(intervals[i][0] <= st.peek()[1]){
-                int[] temp = st.pop();
-                st.add(new int[] {Math.min(temp[0], intervals[i][0]), 
-                                 Math.max(temp[1], intervals[i][1])});
+            if(intervals[i][0] <= end){
+                end = Math.max(end, intervals[i][1]);
             } else {
-                st.add(intervals[i]);
+                result.add(new int[]{start, end});
+                start = intervals[i][0];
+                end = intervals[i][1];
             }
         }
         
-        return convert(st);
+        result.add(new int[]{start, end});
+        
+        return result.toArray(new int[result.size()][]);
     }
 }

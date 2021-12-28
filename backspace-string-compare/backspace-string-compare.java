@@ -25,12 +25,7 @@ class Solution {
             
             if(ch1 != '#' && ch2 != '#'){
                 if(ch1 != ch2){
-                    if(h1>0 && h2>0){
-                        h1--;
-                        h2--;
-                    } else {
-                        return false;
-                    }
+                    return false;
                 }
                 i--; j--;
             } else if(ch1 == '#' && ch2 == '#') {
@@ -48,14 +43,11 @@ class Solution {
         
         while(i>=0){
             ch = s.charAt(i);
-            if(ch != '#') {
-                if(h1>0){
-                    h1--;
-                }
-                else{
-                    return false;
-                }
-            } else {
+            if(ch != '#' && h1 > 0) {
+                h1--;
+            } else if (ch != '#'){
+                return false;
+            } else if (ch == '#'){
                 h1++;
             }
             i--;

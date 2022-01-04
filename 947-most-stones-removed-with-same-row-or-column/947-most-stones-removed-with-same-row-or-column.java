@@ -1,60 +1,58 @@
 class Solution {
     
-    int count = 0;
-    public String getKey(int[] stone){
-        return "(" + stone[0] + "," + stone[1] + ")";
-    }
     
-    public void dfsUtil(String curr, Set<String> visited, Map<String, List<String>> map) {
-        visited.add(curr);
-        for(String adj: map.getOrDefault(curr, new ArrayList<>())){
-            if(!visited.contains(adj))
-            dfsUtil(adj, visited, map);
+    Map<Integer, Integer> rank = new HashMap<>();
+    Map<Integer, Integer> parent = new HashMap<>();
+    
+    
+    int count ;
+    
+    public int find(int x){
+        if(parent.get(x) != x){
+            int up = find(parent.get(x));
+            parent.put(x, up);
         }
+        return parent.get(x);
     }
     
-    public void dfs(Set<String> all, Set<String> visited, Map<String, List<String>> map) {
+    public void union(int x, int y){
+        int px = find(x);
+        int py = find(y);
         
-        for(String s: all){
-            if(!visited.contains(s)){
-                count++;
-                dfsUtil(s, visited, map);
-            }
+        if(px == py)
+            return;
+        
+        count--;
+        
+        if(rank.get(px)<rank.get(py)){
+            parent.put(py, px);
+        } else if(rank.get(px)>rank.get(py)){
+            parent.put(px, py);
+        } else {
+            parent.put(px, py);
+            rank.put(py, rank.get(py)+1);
         }
     }
-    
-    
     public int removeStones(int[][] stones) {
-        Map<String, List<String>> map = new HashMap<>();
-        
-        int n = stones.length;
-        String k1 = null, k2 = null;
-        Set<String> all = new HashSet<>();
-        for(int i=0;i<n;i++){
-        
-            k1 = getKey(stones[i]);
-            all.add(k1);
-            if(map.get(k1) == null)
-                map.put(k1, new ArrayList<>());
+        for(int[] stone: stones){
+            int row = -(stone[0] + 1);
+            int col = (stone[1] + 1);
             
-            for(int j=0;j<i;j++){
-                k2 = getKey(stones[j]);
-                if(stones[i][0] == stones[j][0] || stones[i][1] == stones[j][1]){
-                    List<String> first = map.get(k1);
-                    List<String> second = map.get(k2);
-                    
-                    first.add(k2);
-                    second.add(k1);
-                    map.put(k1, first);
-                    map.put(k2, second);
-                }
-            }
+            rank.put(row, 0);
+            rank.put(col, 0);
+            parent.put(row,row);
+            parent.put(col, col);
         }
         
-        // System.out.println(map);
-        // System.out.println("all" + all);
-        Set<String> visited = new HashSet<>();
-        dfs(all, visited, map);
-        return n - count;
+        count = parent.size();
+        
+        for(int[] stone: stones){
+            int row = -(stone[0] + 1);
+            int col = (stone[1] + 1);
+            
+            union(row, col);
+        }
+        
+        return stones.length - count;
     }
 }

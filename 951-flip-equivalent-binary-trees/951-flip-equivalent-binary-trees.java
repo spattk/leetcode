@@ -29,6 +29,8 @@ class Solution {
         }
         
         boolean temp1 = flipEquiv(root1.left, root2.left) && flipEquiv(root1.right, root2.right);
+        if(temp1)
+            return temp1;
         boolean temp2 = flipEquiv(root1.left, root2.right) && flipEquiv(root1.right, root2.left);
         
         return temp1 || temp2;

@@ -15,13 +15,6 @@
  */
 class Solution {
     
-    public boolean isLeaf(TreeNode root){
-        if(root == null)
-            return false;
-        
-        return root.left == null && root.right == null;
-    }
-    
     public boolean flipEquiv(TreeNode root1, TreeNode root2) {
         if(root1 == null && root2 == null)
             return true;
@@ -35,16 +28,9 @@ class Solution {
             return false;
         }
         
-        if(isLeaf(root1) && isLeaf(root2))
-            return true;
+        boolean temp1 = flipEquiv(root1.left, root2.left) && flipEquiv(root1.right, root2.right);
+        boolean temp2 = flipEquiv(root1.left, root2.right) && flipEquiv(root1.right, root2.left);
         
-        if((root1.left != null && root2.left != null && root1.left.val != root2.left.val) || (root1.right != null && root2.right != null && root1.right.val != root2.right.val)){
-            boolean temp=  flipEquiv(root1.left, root2.right) && flipEquiv(root1.right, root2.left);
-            // System.out.println(temp);
-            return temp;
-        }
-        
-        return (flipEquiv(root1.left, root2.left) && flipEquiv(root1.right, root2.right)) || (flipEquiv(root1.left, root2.right) && flipEquiv(root1.right, root2.left));
-        
+        return temp1 || temp2;
     }
 }

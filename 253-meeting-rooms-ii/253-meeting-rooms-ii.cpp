@@ -17,22 +17,17 @@ public:
         
         for(i=1;i<n;i++)
         {
-          //  cout<<"top "<<pq.top()<<endl;
             while(!pq.empty() && its[i][0]>=pq.top())
             {
-            //    cout<<"check "<<endl;
                 pq.pop();
             }
             
             pq.push(its[i][1]);
-            //cout<<"size "<<pq.size()<<endl;
             
             if(pq.size()>maxi)
             {
                 maxi=pq.size();    
             }
-            
-            
         }
         
         return maxi;

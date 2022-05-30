@@ -1,12 +1,27 @@
+import java.util.*;
+
 class Solution {
-    public int divide(int A, int B) {
-        if (A == 1 << 31 && B == -1) return (1 << 31) - 1;
-        int a = Math.abs(A), b = Math.abs(B), res = 0, x = 0;
-        while (a - b >= 0) {
-            for (x = 0; a - (b << x << 1) >= 0; x++);
-            res += 1 << x;
-            a -= b << x;
+    public int divide(int dividend, int divisor) {
+        
+        if (dividend == 1 << 31 && divisor == -1) return (1 << 31) - 1;
+        
+        int temp1 = dividend; 
+        int temp2 = divisor;
+        int result = 0, count = 0;
+        dividend = Math.abs(dividend);
+        divisor = Math.abs(divisor);
+        
+        while(dividend - divisor >= 0){
+            count = 0;
+            while((dividend - (divisor <<  1 << count)) >= 0){
+                count++;
+            }
+            
+            result += 1 << count;
+            dividend -= divisor << count;
         }
-        return (A > 0) == (B > 0) ? res : -res;
+        
+        return (temp1 > 0) == (temp2 > 0) ? result : -result;
+        
     }
 }

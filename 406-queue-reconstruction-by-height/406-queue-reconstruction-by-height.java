@@ -1,29 +1,38 @@
 class Solution {
+    
     public int[][] reconstructQueue(int[][] people) {
-        Arrays.sort(people, (a,b) -> (a[0] == b[0]? a[1]-b[1]: a[0]-b[0]));
+        Arrays.sort(people, (a1, a2)-> {
+            int res = Integer.compare(a1[0], a2[0]);
+            if(res != 0)
+                return res;
+
+            return Integer.compare(a1[1], a2[1]);
+        });
+        
         int n = people.length;
-        int[][] res= new int[n][2];
-        for(int i=0;i<n;i++){
-            res[i][0] = -1;
+        int[][] ans = new int[n][2];
+        for(int i=0; i<n; i++){
+            ans[i][0] = -1;
+            ans[i][1] = -1;
         }
         
         for(int[] p: people){
             int count = p[1];
-            boolean flag = true;
-            for(int i=0;i<n;i++){
-                if(count <= 0 && res[i][0] == -1){
-                    res[i][0] = p[0];
-                    res[i][1] = p[1];
-                    flag = false;
-                    break;
+            for(int i=0; i<n; i++){
+                if(ans[i][0] != -1){
+                    if(ans[i][0] >= p[0])
+                        count--;
+                } else {
+                    if(count == 0){
+                        ans[i] = p;
+                        break;
+                    } else {
+                        count--;
+                    }
                 }
-                if(res[i][0] == -1 || res[i][0] >= p[0] )
-                    count--;
-
-                
             }
         }
         
-        return res;
+        return ans;
     }
 }

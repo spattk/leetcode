@@ -12,8 +12,7 @@ class Solution {
         int n = people.length;
         int[][] ans = new int[n][2];
         for(int i=0; i<n; i++){
-            ans[i][0] = -1;
-            ans[i][1] = -1;
+            Arrays.fill(ans[i], -1);
         }
         
         for(int[] p: people){

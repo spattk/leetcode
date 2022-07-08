@@ -11,7 +11,7 @@ class Solution {
         if(k >= s3.length())
             return false;
         
-        String key = "" + i + "," + j + "," + k;
+        String key = i + "," + j + "," + k;
         boolean res = false;
         if(map.get(key)!=null)
             return map.get(key);

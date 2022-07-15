@@ -1,0 +1,1 @@
+Stuck at how to represent the data

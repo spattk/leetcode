@@ -8,7 +8,7 @@ class Solution {
         dp[2][1] = 1;
         for (int i = 3; i <= n; i++) {
             dp[i][0] = 1;
-            for (int j = 1; j <= Math.min(k, i*(i-1)/2); j++) {
+            for (int j = 1; j <= k; j++) {
                 dp[i][j] = dp[i][j-1] + dp[i-1][j];
                 if (j >= i) dp[i][j] -= dp[i-1][j-i];
                 dp[i][j] = (dp[i][j]+mod) % mod;

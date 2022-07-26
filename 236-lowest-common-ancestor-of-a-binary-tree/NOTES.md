@@ -1,0 +1,1 @@
+If the nodes are always found, then that makes the problem a little simpler

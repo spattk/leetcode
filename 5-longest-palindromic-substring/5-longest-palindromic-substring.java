@@ -3,20 +3,31 @@ class Solution {
         int n = s.length();
         String res = "";
         int start = 0, maxLen = 0;
-        boolean[][] dp = new boolean[n][n];
         
-        
-        for(int i=n-1;i>=0;i--){
-            for(int j=i;j<n;j++){
-                dp[i][j] = (s.charAt(i) == s.charAt(j) && (j - i < 3 || dp[i+1][j-1]));
-                
-                if(dp[i][j] && (j-i+1)>maxLen){
-                    start = i;
-                    maxLen = j-i+1;
+        for(int i=0;i<n;i++){
+            int l = i, r = i;
+            // odd
+            while(l>=0 && r < n && s.charAt(l) == s.charAt(r)){
+                if((r-l+1)>maxLen){
+                    start = l;
+                    maxLen = r - l + 1;
                 }
+                l--;
+                r++;
+            }
+            
+            
+            //even
+            l = i; r = i+1;
+            while(l>=0 && r < n && s.charAt(l) == s.charAt(r)){
+                if((r-l+1)>maxLen){
+                    start = l;
+                    maxLen = r - l + 1;
+                }
+                l--;
+                r++;
             }
         }
-        
         return s.substring(start, start+maxLen);
     }
 }

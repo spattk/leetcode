@@ -17,24 +17,28 @@ class Solution {
     public void generateList(List<List<String>> result, Map<Integer, Set<Integer>> map, int n, String[] strs){
         
         
+        
         Set<Integer> visited = new HashSet<>();
+        for(int i=0;i<n;i++)
+            visited.add(i);
+        
         for(int key: map.keySet()){
-            visited.add(key);
+            visited.remove(key);
             List<String> temp = new ArrayList<>();
             temp.add(strs[key]);
             for(int ele: map.get(key)){
-                visited.add(ele);
+                visited.remove(ele);
                 temp.add(strs[ele]);
             }
             result.add(new ArrayList<>(temp));
         }
         
-        for(int i=0;i<n;i++){
-            if(!visited.contains(i)){
-                List<String> temp = new ArrayList<>();
-                temp.add(strs[i]);
-                result.add(new ArrayList<>(temp));
-            }
+        
+        
+        for(int i: visited){
+            List<String> temp = new ArrayList<>();
+            temp.add(strs[i]);
+            result.add(new ArrayList<>(temp));
         }
         
     }

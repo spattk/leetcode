@@ -14,30 +14,36 @@
  * }
  */
 class Solution {
-    Map<Long, Integer> prefixCount;
-    int result;
     
-    public void dfs(TreeNode root, long targetSum, long prevSum) {
+    int result = 0;
+    public void innerDfs(TreeNode root, long curr, int targetSum){
         if(root == null)
             return;
         
-        long currSum = prevSum + root.val;
+        curr += root.val;
+        if(curr == targetSum)
+            result++;
         
-        result += prefixCount.getOrDefault(currSum - targetSum, 0);
+        innerDfs(root.left, curr, targetSum);
+        innerDfs(root.right, curr, targetSum);
         
-        prefixCount.put(currSum, prefixCount.getOrDefault(currSum, 0) + 1);
+    }
+    
+    public void outerDfs(TreeNode node, int targetSum){
         
-        dfs(root.left, targetSum, currSum);
-        dfs(root.right, targetSum, currSum);
+        if(node == null)
+            return;
         
-        prefixCount.put(currSum, prefixCount.getOrDefault(currSum, 0) - 1);
+        innerDfs(node, 0, targetSum);
+        outerDfs(node.left, targetSum);
+        outerDfs(node.right, targetSum);
     }
     
     public int pathSum(TreeNode root, int targetSum) {
-        prefixCount = new HashMap<>();
-        prefixCount.put(0L,1);
-        result = 0;
-        dfs(root, targetSum, 0);
+        if(root == null)
+            return 0;
+        
+        outerDfs(root, targetSum);
         return result;
     }
 }

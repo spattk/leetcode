@@ -10,9 +10,9 @@ class Solution {
         return x>=0 && x< r && y>=0 && y<c;
     }
     
-    public void dfs(int[][] grid, int x, int y, int r, int c, boolean[][] visited){
-        visited[x][y] = true;
+    public void dfs(int[][] grid, int x, int y, int r, int c){
         val++;
+        grid[x][y] = 0;
         if(val > max){
             max = val;
         }
@@ -21,8 +21,8 @@ class Solution {
             int nx = x + d[i][0];
             int ny = y + d[i][1];
             
-            if(isSafe(nx, ny, r, c) && !visited[nx][ny] && grid[nx][ny] == 1){
-                dfs(grid, nx, ny, r, c, visited);
+            if(isSafe(nx, ny, r, c) && grid[nx][ny] == 1){
+                dfs(grid, nx, ny, r, c);
             }
         }
         
@@ -31,15 +31,13 @@ class Solution {
     public int maxAreaOfIsland(int[][] grid) {
         int r = grid.length;
         int c = grid[0].length;
-        boolean[][] visited = new boolean[r][c];
-        
         
         
         for(int i=0;i<r;i++){
             for(int j=0;j<c;j++){
-                if(grid[i][j] == 1 && !visited[i][j]){
+                if(grid[i][j] == 1){
                     val = 0;
-                    dfs(grid, i, j, r, c, visited);
+                    dfs(grid, i, j, r, c);
                 }
             }
         }

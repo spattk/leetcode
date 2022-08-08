@@ -1,0 +1,3 @@
+- Sort Tickets to not sort the adj list
+- Create Adj List
+- Try each one of them using backtracking and stop if you find one

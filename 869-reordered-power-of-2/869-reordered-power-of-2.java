@@ -11,23 +11,24 @@ class Solution {
         
     }
     
-    public int[] getMap(String s){
+    public int[] getMap(int n){
         int[] map = new int[10];
-        for(char ch: s.toCharArray())
-            map[ch-'0']++;
+        while(n>0){
+            map[n%10]++;
+            n/=10;
+        }
         
         return map;
     }
     
-    Set<String> powerOf2 = new HashSet<>();
+    Set<Integer> powerOf2 = new HashSet<>();
     public boolean reorderedPowerOf2(int n) {
         for(int i=0; i<31;i++){
-            powerOf2.add(new String("" + (int)Math.pow(2, i)));
+            powerOf2.add((int)Math.pow(2, i));
         }
         
-        String num = "" + n;
-        int[] map = getMap(num);
-        for(String str: powerOf2){
+        int[] map = getMap(n);
+        for(Integer str: powerOf2){
             if(matches(map, getMap(str)))
                 return true;
         }

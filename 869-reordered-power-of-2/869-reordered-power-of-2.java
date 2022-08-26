@@ -26,8 +26,9 @@ class Solution {
         }
         
         String num = "" + n;
+        int[] map = getMap(num);
         for(String str: powerOf2){
-            if(matches(getMap(num), getMap(str)))
+            if(matches(map, getMap(str)))
                 return true;
         }
         

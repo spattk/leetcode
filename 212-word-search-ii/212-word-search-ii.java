@@ -1,65 +1,81 @@
+
+
 class Solution {
-    boolean[][] visited;
-    int[][] dx = {{-1,0}, {1,0}, {0, 1}, {0, -1}};
+    
+    class TrieNode {
+        Map<Character, TrieNode> children;
+        boolean isWord;
+
+        TrieNode(){
+            children = new HashMap<>();
+            isWord = false;
+        }
+
+        public void addWord(String word){
+            TrieNode curr = root;
+            for(char ch: word.toCharArray()){
+                if(curr.children.get(ch) == null){
+                    curr.children.put(ch, new TrieNode());
+                }
+                curr = curr.children.get(ch);
+            }
+            
+            curr.isWord = true;
+        }
+    }
+    
+    Set<String> answer = new HashSet<>();
+    int[][]dx = {{-1, 0}, {1,0}, {0, 1}, {0, -1}};
     
     public boolean isSafe(int x, int y, int r, int c){
         return x>=0 && x<r && y>=0 && y<c;
     }
     
-    Set<String> result = new HashSet<>();
-    public void findWordUtil(char[][] board, int x, int y, StringBuilder sb, Set<String> words, Set<String> orig) {
+    public void dfs(int x, int y, StringBuilder sb, TrieNode node, char[][] board, boolean[][]visited) {
         
-        String str = sb.toString();
-        
-        if(!words.contains(str)){
+        char ch = sb.charAt(sb.length()-1);
+        if(node.children.get(ch) == null){
             return;
         }
         
-        if(orig.contains(str))
-            result.add(str);
+        node = node.children.get(ch);
+        if(node.isWord)
+            answer.add(sb.toString());
         
-        
-        
-        for(int i =0 ;i <dx.length; i++){
+        for(int i=0; i<dx.length; i++){
             int nx = x + dx[i][0];
             int ny = y + dx[i][1];
             
             if(isSafe(nx, ny, board.length, board[0].length) && !visited[nx][ny]){
                 sb.append(board[nx][ny]);
                 visited[nx][ny] = true;
-                findWordUtil(board, nx, ny, sb, words, orig);
+                dfs(nx, ny, sb, node, board, visited);
                 visited[nx][ny] = false;
                 sb.setLength(sb.length()-1);
             }
         }
-        
     }
-   
+    
+    TrieNode root = new TrieNode();
     public List<String> findWords(char[][] board, String[] words) {
-        StringBuilder sb = new StringBuilder();
-        int r = board.length;
-        int c = board[0].length;
-        visited = new boolean[r][c];
-        Set<String> wordSet = new HashSet<>();
+        
         for(String word: words){
-            StringBuilder sb1 = new StringBuilder();
-            for(char ch: word.toCharArray()){
-                sb1.append(ch);
-                wordSet.add(sb1.toString());
-            }
+            root.addWord(word);
         }
         
-        Set<String> orig = new HashSet<>(Arrays.asList(words));
-        for(int i=0; i<r; i++){
+        int r = board.length, c = board[0].length;
+        boolean[][] visited = new boolean[r][c];
+        StringBuilder sb = new StringBuilder();
+        for(int i =0; i<r; i++){
             for(int j=0; j<c; j++){
                 visited[i][j] = true;
                 sb.append(board[i][j]);
-                findWordUtil(board, i, j, sb, wordSet, orig);
-                visited[i][j] = false;
+                dfs(i, j, sb, root, board, visited);
                 sb.setLength(sb.length()-1);
+                visited[i][j] = false;
             }
         }
         
-        return new ArrayList<>(result);
+        return new ArrayList<>(answer);
     }
 }

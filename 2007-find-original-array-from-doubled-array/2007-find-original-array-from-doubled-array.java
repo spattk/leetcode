@@ -15,8 +15,6 @@ class Solution {
                     map.put(num, map.get(num)-2);
                 } else if(map.getOrDefault(num, 0) == 1) {
                     return new int[]{};
-                } else if(map.getOrDefault(num, 0) == 0){
-                    continue;
                 }
             }
             

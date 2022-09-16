@@ -21,7 +21,7 @@ class Solution {
     }
     
     public int maximumScore(int[] nums, int[] multipliers) {
-        dp = new Integer[multipliers.length+1][multipliers.length+1];
+        dp = new Integer[1001][1001];
         // for(int i=0; i<dp.length; i++)
         //     Arrays.fill(dp[i], -1);
         return solve(nums, multipliers, 0, 0);

@@ -44,9 +44,10 @@ class Solution {
         while(!pq.isEmpty()){
             
             Node curr = pq.poll();
+            visited.add(curr.v);
             
             for(Node nei: adj.getOrDefault(curr.v, new HashSet<>())){
-                if(dist[curr.v] + nei.wt < dist[nei.v]) {
+                if(!visited.contains(nei.v) && dist[curr.v] + nei.wt < dist[nei.v]) {
                     dist[nei.v] = dist[curr.v] + nei.wt;
                     pq.add(new Node(nei.v, dist[curr.v] + nei.wt));
                 }

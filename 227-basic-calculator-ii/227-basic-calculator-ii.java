@@ -1,13 +1,16 @@
 class Solution {
-    public String getNumber(String s, int idx){
-        StringBuilder sb = new StringBuilder();
+    int numCount = 0;
+    public int getNumber(String s, int idx){
+        int num = 0;
         int i = idx;
+        numCount = 0;
         while(i < s.length() && Character.isDigit(s.charAt(i))){
-            sb.append(s.charAt(i));
+            num = num * 10 + (s.charAt(i)- '0');
             i++;
+            numCount++;
         }
         
-        return sb.toString();
+        return num;
     }
     
     public int solveRest(Stack<Integer>numStack, Stack<Character>opStack) {
@@ -38,9 +41,9 @@ class Solution {
             }
             
             else if(Character.isDigit(ch)){
-                String num = getNumber(s, i);
-                i += num.length();
-                numStack.push(Integer.parseInt(num));
+                int num = getNumber(s, i);
+                i += numCount;
+                numStack.push(num);
                 
                 if(!opStack.isEmpty() && opStack.peek() == '*') {
                     int n2 = numStack.pop();
@@ -59,9 +62,9 @@ class Solution {
                 if(ch == '-'){
                     opStack.push('+');
                     i++;
-                    String num = getNumber(s, i);
-                    i += num.length();
-                    numStack.push(-1 * Integer.parseInt(num));
+                    int num = getNumber(s, i);
+                    i += numCount;
+                    numStack.push(-1 * num);
                 } else {
                     opStack.push(ch);
                     i++;

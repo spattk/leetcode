@@ -1,79 +1,34 @@
 class Solution {
-    int numCount = 0;
-    public int getNumber(String s, int idx){
-        int num = 0;
-        int i = idx;
-        numCount = 0;
-        while(i < s.length() && Character.isDigit(s.charAt(i))){
-            num = num * 10 + (s.charAt(i)- '0');
-            i++;
-            numCount++;
-        }
-        
-        return num;
-    }
-    
-    public int solveRest(Stack<Integer>numStack, Stack<Character>opStack) {
-        while(numStack.size() != 1){
-            int n2 = numStack.pop();
-            int n1 = numStack.pop();
-            char op = opStack.pop();
-            
-            if(op == '+'){
-                numStack.push(n1 + n2);
-            } else if (op == '-') {
-                numStack.push(n1 - n2);
-            }
-        }
-        
-        return numStack.pop();
-    }
-    
     public int calculate(String s) {
-        Stack<Integer> numStack = new Stack<>();
-        Stack<Character> opStack = new Stack<>();
-        
+        char lastOp = '+';
         int n = s.length();
-        for(int i=0; i<n; ){
+        int lastNumber = 0, currNumber = 0 ,result = 0;
+        for(int i=0; i<n; i++){
             char ch = s.charAt(i);
-            if(ch == ' '){
-                i++;
+            
+            if(Character.isDigit(ch)){
+                currNumber = currNumber * 10 + (ch - '0');
             }
             
-            else if(Character.isDigit(ch)){
-                int num = getNumber(s, i);
-                i += numCount;
-                numStack.push(num);
-                
-                if(!opStack.isEmpty() && opStack.peek() == '*') {
-                    int n2 = numStack.pop();
-                    int n1 = numStack.pop();
-                    opStack.pop();
-                    numStack.push(n1 * n2);
-                } else if(!opStack.isEmpty() && opStack.peek() == '/') {
-                    int n2 = numStack.pop();
-                    int n1 = numStack.pop();
-                    opStack.pop();
-                    numStack.push(n1 / n2);
-                }
-            }
-            
-            else {
-                if(ch == '-'){
-                    opStack.push('+');
-                    i++;
-                    int num = getNumber(s, i);
-                    i += numCount;
-                    numStack.push(-1 * num);
-                } else {
-                    opStack.push(ch);
-                    i++;
+            if(!Character.isDigit(ch) && !Character.isWhitespace(ch) || i == n-1) {
+                if(lastOp == '+') {
+                    result += lastNumber;
+                    lastNumber = currNumber;
+                } else if (lastOp == '-') {
+                    result += lastNumber;
+                    lastNumber = -1 * currNumber;
+                } else if (lastOp == '*') {
+                    lastNumber *= currNumber;
+                } else if (lastOp == '/') {
+                    lastNumber /= currNumber;
                 }
                 
-                
+                lastOp = ch;
+                currNumber = 0;
             }
         }
         
-        return solveRest(numStack, opStack);
+        result += lastNumber;
+        return result;
     }
 }

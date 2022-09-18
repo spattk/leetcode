@@ -13,7 +13,7 @@ class Solution {
         
         int lo = 0, hi = n1;
         int cut1, cut2, L1, L2, R1, R2;
-        while(lo <= hi){
+        while(true){
             cut1 = (lo + hi)/2;
             cut2 = (n1 + n2 + 1)/2 - cut1;
             
@@ -36,6 +36,6 @@ class Solution {
             }
         }
         
-        return 0;
+        // return 0.0;
     }
 }

@@ -61,19 +61,6 @@ class Solution {
         return 0;
     }
     
-    public void findLeaves(TreeNode root, Set<Integer> leaves){
-        if(root == null)
-            return;
-        
-        if(root.left == null && root.right == null){
-            leaves.add(root.val);
-            return;
-        }
-        
-        findLeaves(root.left, leaves);
-        findLeaves(root.right, leaves);
-    }
-    
     public int findClosestLeaf(TreeNode root, int k) {
         Set<Integer> leaves = new HashSet<>();
         Map<Integer, Set<Integer>> adj = new HashMap<>();

@@ -15,9 +15,12 @@
  */
 class Solution {
     
-    public void convertToGraph(Map<Integer, Set<Integer>> adj, TreeNode node, TreeNode parent) {
+    public void convertToGraph(Map<Integer, Set<Integer>> adj, TreeNode node, TreeNode parent, Set<Integer> leaves) {
         if(node == null)
             return;
+        
+        if(node.left == null && node.right == null)
+            leaves.add(node.val);
         
         Set<Integer> curr = adj.getOrDefault(node.val, new HashSet<>());
         if(parent != null)
@@ -31,8 +34,8 @@ class Solution {
         
         adj.put(node.val, curr);
         
-        convertToGraph(adj, node.left, node);
-        convertToGraph(adj, node.right, node);
+        convertToGraph(adj, node.left, node, leaves);
+        convertToGraph(adj, node.right, node, leaves);
     }
     
     public int bfs(Map<Integer, Set<Integer>> adj, int curr, Set<Integer> leaves){
@@ -73,10 +76,8 @@ class Solution {
     
     public int findClosestLeaf(TreeNode root, int k) {
         Set<Integer> leaves = new HashSet<>();
-        findLeaves(root, leaves);
-        
         Map<Integer, Set<Integer>> adj = new HashMap<>();
-        convertToGraph(adj, root, null);
+        convertToGraph(adj, root, null, leaves);
         
         // System.out.println(adj);
         return bfs(adj, k, leaves);

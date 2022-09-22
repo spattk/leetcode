@@ -1,0 +1,6 @@
+["/*Test program */", "int main()", "{ ", "  // variable declaration ", "int a, b, c;", "/* This is a test", "   multiline  ", "   comment for ", "   testing */", "a = b + c;", "}"]
+["a/*comment", "line", "more_comment*/b"]
+["a/*/b//*c","blank","d//*e/*/f"]
+["main() {", "   func(1);", "   /** / more comments here", "   float f = 2.0", "   f += f;", "   cout << f; */", "}"]
+["struct Node{", "    /*/ declare members;/**/", "    int size;", "    /**/int val;", "};"]
+["a/*/b//*c","blank","d/*/e*//f"]

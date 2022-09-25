@@ -5,8 +5,6 @@ class Solution {
             map.put(ch, map.getOrDefault(ch,0)+1);
         }
         
-        System.out.println(map);
-        
         int total = 0;
         boolean odd = false;
         for(char key: map.keySet()){

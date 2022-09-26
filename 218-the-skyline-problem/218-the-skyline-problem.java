@@ -13,6 +13,7 @@ class Solution {
     
     public static int customCompare(Node n1, Node n2){
         int val = Integer.compare(n1.p, n2.p);
+        
         if(val != 0)
             return val;
         
@@ -38,6 +39,7 @@ class Solution {
             list.add(new Node(ele[0], ele[2], 's'));
             list.add(new Node(ele[1], ele[2], 'e'));
         }
+        
         Collections.sort(list, Solution::customCompare);
         
         PriorityQueue<Integer> pq = new PriorityQueue<>((p,q)->q-p);
@@ -52,19 +54,13 @@ class Solution {
                 pq.add(node.ht);
                 currMax = pq.peek();
                 if(currMax != prevMax){
-                    List<Integer> temp = new ArrayList<>();
-                    temp.add(node.p);
-                    temp.add(node.ht);
-                    result.add(new ArrayList<>(temp));
+                    result.add(Arrays.asList(node.p, node.ht));
                 }
             } else {
                 pq.remove(node.ht);
                 currMax = pq.peek();
                 if(currMax != prevMax){
-                    List<Integer> temp = new ArrayList<>();
-                    temp.add(node.p);
-                    temp.add(pq.peek());
-                    result.add(temp);
+                    result.add(Arrays.asList(node.p, pq.peek()));
                 }
             }
         }

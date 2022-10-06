@@ -9,6 +9,8 @@ class Solution {
                 int len = word.length();
                 if((i + len) <= n && s.substring(i, i+len).equals(word)){
                     dp[i] |= dp[i+len];
+                    if(dp[i])
+                        break;
                 }
             }
         }

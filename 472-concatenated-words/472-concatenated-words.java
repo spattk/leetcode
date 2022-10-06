@@ -21,8 +21,10 @@ class Solution {
         for(int i=1; i<word.length(); i++){
             String suffix = word.substring(i);
             String prefix = word.substring(0, i);
-            if(set.contains(prefix) && (set.contains(suffix) || isConcat(suffix, set)))
-               return true;
+            if(set.contains(prefix) && (set.contains(suffix) || isConcat(suffix, set))) {
+                set.add(suffix);
+                return true;
+            }
         }
                
     

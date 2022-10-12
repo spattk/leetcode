@@ -14,7 +14,7 @@ class Solution {
         if(root == null)
             return null;
         
-        if(root == p || root == q)
+        if(root.val == p.val || root.val == q.val)
             return root;
         
         TreeNode left = lca(root.left, p, q);

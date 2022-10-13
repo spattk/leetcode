@@ -1,6 +1,6 @@
 class Solution {
     public long minimumHealth(int[] damage, int armor) {
-        Arrays.sort(damage);
+        // Arrays.sort(damage);
         int n = damage.length;
         
         int maxArmor = 0;

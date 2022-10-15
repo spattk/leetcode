@@ -10,9 +10,8 @@ class Solution {
         return x>=0 && x < r && y >=0 && y<c;
     }
     
-    public int computeLength(int x, int y, int[][]matrix, boolean[][] visited, int count){
+    public int computeLength(int x, int y, int[][]matrix, boolean[][] visited){
         visited[x][y] = true;
-        result = Math.max(result, count);
         
         int ans = 1;
         for(int i=0; i<dx.length; i++){
@@ -22,9 +21,9 @@ class Solution {
             if(isSafe(nx, ny) && (matrix[nx][ny] > matrix[x][y])) {
                 int temp;
                 if(visited[nx][ny]) {
-                    temp = count + len[nx][ny];
+                    temp = 1 + len[nx][ny];
                 } else {
-                     temp = 1 + computeLength(nx, ny, matrix, visited, count);
+                     temp = 1 + computeLength(nx, ny, matrix, visited);
                 }
                 
                 result = Math.max(result, temp);
@@ -48,14 +47,11 @@ class Solution {
         for(int i=0; i<r; i++){
             for(int j=0; j<c; j++){
                 if(!visited[i][j]){
-                    computeLength(i, j, matrix, visited, 1);
+                    computeLength(i, j, matrix, visited);
                 }
             }
         }
         
-        // for(int i=0; i<r; i++){
-        //     System.out.println(Arrays.toString(len[i]));
-        // }
         return result;
     }
 }

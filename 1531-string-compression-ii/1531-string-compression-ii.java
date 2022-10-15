@@ -2,15 +2,15 @@ class Solution {
     private Map < Integer, Integer > memo = new HashMap < > ();
     Set < Integer > add = Set.of(1, 9, 99);
     public int getLengthOfOptimalCompression(String s, int k) {
-        return dp(s, 0, (char)('a' + 26), 0, k);
+        return dp(s.toCharArray(), 0, (char)('a' + 26), 0, k);
     }
 
-    private int dp(String s, int idx, char lastChar, int lastCharCount, int k) {
+    private int dp(char[] chs, int idx, char lastChar, int lastCharCount, int k) {
         if (k < 0) {
             return Integer.MAX_VALUE / 2;
         }
 
-        if (idx == s.length()) {
+        if (idx == chs.length) {
             return 0;
         }
 
@@ -21,11 +21,11 @@ class Solution {
         }
 
         int keepChar;
-        int deleteChar = dp(s, idx + 1, lastChar, lastCharCount, k - 1);
-        if (s.charAt(idx) == lastChar) {
-            keepChar = dp(s, idx + 1, lastChar, lastCharCount + 1, k) + (add.contains(lastCharCount) ? 1 : 0);
+        int deleteChar = dp(chs, idx + 1, lastChar, lastCharCount, k - 1);
+        if (chs[idx] == lastChar) {
+            keepChar = dp(chs, idx + 1, lastChar, lastCharCount + 1, k) + (add.contains(lastCharCount) ? 1 : 0);
         } else {
-            keepChar = dp(s, idx + 1, s.charAt(idx), 1, k) + 1;
+            keepChar = dp(chs, idx + 1, chs[idx], 1, k) + 1;
         }
         int res = Math.min(keepChar, deleteChar);
         memo.put(key, res);

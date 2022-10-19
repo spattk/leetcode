@@ -15,7 +15,7 @@ class Interval {
 
 class Solution {
     public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
-        TreeMap<Integer, Integer> map = new TreeMap<>();
+        Map<Integer, Integer> map = new TreeMap<>();
         for(List<Interval> eles: schedule){
             for(Interval ele: eles){
                 map.put(ele.start, map.getOrDefault(ele.start, 0) + 1);
@@ -29,7 +29,6 @@ class Solution {
         List<Interval> list = new ArrayList<>();
         for(int key: map.keySet()){
             sum += map.get(key);
-            
             
             if(sum == 0){
                 start = key;

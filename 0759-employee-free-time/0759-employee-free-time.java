@@ -27,7 +27,6 @@ class Solution {
         int sum = 0;
         Integer start = null;
         List<Interval> list = new ArrayList<>();
-        Integer lastKey = null;
         for(int key: map.keySet()){
             sum += map.get(key);
             
@@ -41,11 +40,6 @@ class Solution {
                 start = null;
             }
             
-            lastKey = key;
-        }
-        
-        if(start != null && !start.equals(lastKey)){
-            list.add(new Interval(start, lastKey));
         }
         
         return list;

@@ -18,13 +18,14 @@ class Solution {
 
         // run a binary search to find the target zone
         int low = 0, high = this.prefixSums.length;
-        while (low < high) {
+        while (low <= high) {
             // better to avoid the overflow
             int mid = (low + high) / 2;
             if (target > this.prefixSums[mid])
                 low = mid + 1;
-            else
-                high = mid;
+            else if (target <= this.prefixSums[mid]){
+                high = mid-1;
+            }
             
             
         }

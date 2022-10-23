@@ -4,9 +4,8 @@ class Solution {
         Map<Integer, List<Integer>> map = new HashMap<>();
         int maxA = 0, minA = (int) 1e5 + 1;
         for(int[] ele: properties) {
-            List<Integer> list = map.getOrDefault(ele[0], new ArrayList<>());
-            list.add(ele[1]);
-            map.put(ele[0], list);
+            map.putIfAbsent(ele[0], new ArrayList<>());
+            map.get(ele[0]).add(ele[1]);
             maxA = Math.max(maxA, ele[0]);
             minA = Math.min(minA, ele[0]);
         }

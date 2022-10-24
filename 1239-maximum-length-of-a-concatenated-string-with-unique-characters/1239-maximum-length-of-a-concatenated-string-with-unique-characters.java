@@ -43,18 +43,18 @@ class Solution {
         return count;
     }
     
-    public String getKey(boolean[] bitVector){
-        StringBuilder sb = new StringBuilder();
-        for(boolean ch: bitVector){
-            if(ch){
-                sb.append("1");
-            } else {
-                sb.append("0");
-            }
-        }
+//     public String getKey(boolean[] bitVector){
+//         StringBuilder sb = new StringBuilder();
+//         for(boolean ch: bitVector){
+//             if(ch){
+//                 sb.append("1");
+//             } else {
+//                 sb.append("0");
+//             }
+//         }
         
-        return sb.toString();
-    }
+//         return sb.toString();
+//     }
     
 	public int solve(List<String> arr, int idx, boolean[] bitVector){
 		if(idx == arr.size()){
@@ -64,10 +64,10 @@ class Solution {
 		// if(dp[idx] != null){
 		// 	return getCount(bitVector) + dp[idx];
 		// }
-        String key = getKey(bitVector);
-        Pair<Integer, String> pair = new Pair(idx, key);
-        if(dp.get(pair) != null)
-            return dp.get(pair);
+        // String key = getKey(bitVector);
+        // Pair<Integer, String> pair = new Pair(idx, key);
+        // if(dp.get(pair) != null)
+        //     return dp.get(pair);
 
 		int result = 0;
 		if(isValidSelf(arr,idx) && isPossible(arr, idx, bitVector)){
@@ -84,7 +84,7 @@ class Solution {
 			result = solve(arr, idx+1, bitVector);
 		}
 
-        dp.put(pair, result);
+        // dp.put(pair, result);
 		return result;
 	}	
 

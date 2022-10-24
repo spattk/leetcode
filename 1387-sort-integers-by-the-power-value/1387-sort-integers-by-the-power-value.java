@@ -1,57 +1,37 @@
 class Solution {
-     	
-	public static int compare(int[] p, int q[]){
-		int ret = Integer.compare(p[1],q[1]);
-		if(ret != 0)
-			return ret;
-
-		return Integer.compare(p[0], q[0]);
-	}
+    
+    Map<Integer, Integer> dp;
         
 	public int getSteps(int num){
 		
-		Queue<int[]> q = new LinkedList<>();
-		q.add(new int[]{num, 0});
-		Set<Integer> visited = new HashSet<>();
-		visited.add(num);
-		while(!q.isEmpty()){
-			int[] curr = q.poll();
+        if(num == 1)
+            return 0;
         
+        if(dp.get(num) != null){
+            return dp.get(num);
+        }
+		
+        int result;
+        
+        if(num % 2 == 0){
+            result =  1 + getSteps(num/2);
+        } else {
+            result = 1 + getSteps(3*num + 1);
             
-			if(curr[0] == 1) {
-				return curr[1];
-            }
-
-			int temp = curr[0];
-			int count = curr[1];
-
-			if(temp % 2 == 0){
-				if(!visited.contains(temp/2)){
-					visited.add(temp/2);
-					q.add(new int[]{temp/2, count + 1});
-				}
-			}
-
-			else {
-				if(!visited.contains(temp * 3 + 1)){
-					visited.add(temp*3 + 1);
-					q.add(new int[]{temp * 3 + 1, count + 1});
-				}
-
-			}
-		}
-
-		return -1;
+        }
+            
+        dp.put(num, result);
+		return result;
 	}
 	
     public int getKth(int lo, int hi, int k) {
+        dp = new HashMap<>();
      	List<int[]> list = new ArrayList<>();
 		for(int i=lo; i<=hi; i++){
-            int steps = getSteps(i);
-			list.add(new int[]{i, steps});
+			list.add(new int[]{i, getSteps(i)});
 		}   
-
-		Collections.sort(list, Solution::compare);
+    
+		Collections.sort(list, (a,b)-> b[1]!=a[1] ?a[1]-b[1]:a[0]-b[0]);
 		return list.get(k-1)[0];
     }
 }

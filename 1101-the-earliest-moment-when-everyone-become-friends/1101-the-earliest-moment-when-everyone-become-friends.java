@@ -46,6 +46,8 @@ class Solution {
 	}
 
     public int earliestAcq(int[][] logs, int n) {
+        if (logs.length < n - 1) { return -1; }
+        
 		Arrays.sort(logs, (a,b) -> a[0] - b[0]);
 		initDisjointSet(n);
 

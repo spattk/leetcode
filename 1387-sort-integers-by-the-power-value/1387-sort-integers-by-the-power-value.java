@@ -7,7 +7,7 @@ class Solution {
 
 		return Integer.compare(p[0], q[0]);
 	}
-
+        
 	public int getSteps(int num){
 		
 		Queue<int[]> q = new LinkedList<>();
@@ -16,8 +16,11 @@ class Solution {
 		visited.add(num);
 		while(!q.isEmpty()){
 			int[] curr = q.poll();
-			if(curr[0] == 1)
+        
+            
+			if(curr[0] == 1) {
 				return curr[1];
+            }
 
 			int temp = curr[0];
 			int count = curr[1];
@@ -41,15 +44,16 @@ class Solution {
 		return -1;
 	}
 	
-    	public int getKth(int lo, int hi, int k) {
+    public int getKth(int lo, int hi, int k) {
      	List<int[]> list = new ArrayList<>();
 		for(int i=lo; i<=hi; i++){
-			list.add(new int[]{i, getSteps(i)});
+            int steps = getSteps(i);
+			list.add(new int[]{i, steps});
 		}   
 
 		Collections.sort(list, Solution::compare);
 		return list.get(k-1)[0];
-    	}
+    }
 }
 
 

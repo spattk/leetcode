@@ -10,9 +10,6 @@ class RLEIterator {
     
     public int next(int n) {
         while(idx < len){
-            while(arr[idx] == 0 && idx < len){
-                idx += 2;
-            }
 
             if(idx >= len){
                 return -1;

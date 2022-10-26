@@ -11,7 +11,7 @@ class Solution {
         int w = books[idx][0];
         int h = books[idx][1];
 
-        String key = idx + "," + widthLeft + "," + height;
+        String key = idx + "," + widthLeft;
         if(dp.get(key)!= null)
             return dp.get(key);
         

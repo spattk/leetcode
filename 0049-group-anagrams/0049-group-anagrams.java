@@ -13,7 +13,7 @@ class Solution {
                 sb.append(count[i]);
             }
             String key = sb.toString();
-            if (!ans.containsKey(key)) ans.put(key, new ArrayList());
+            ans.putIfAbsent(key, new ArrayList());
             ans.get(key).add(s);
         }
         return new ArrayList(ans.values());

@@ -23,7 +23,7 @@ class Solution {
                 if(visited[nx][ny]) {
                     temp = 1 + len[nx][ny];
                 } else {
-                     temp = 1 + computeLength(nx, ny, matrix, visited);
+                    temp = 1 + computeLength(nx, ny, matrix, visited);
                 }
                 
                 result = Math.max(result, temp);

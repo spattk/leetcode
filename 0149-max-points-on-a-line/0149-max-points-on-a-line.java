@@ -38,10 +38,10 @@ class Solution {
         if(n == 1 || n == 2)
             return n;
         
-        for(int i=0;i<n && !set.contains(points[i][0] + "-" + points[i][1]);i++){
+        for(int i=0;i<n;i++){
             map.clear();
             int same = 0, localMax = 1;
-            for(int j=0;j<n;j++){
+            for(int j=i+1;j<n;j++){
                 
                 if(i == j)
                     continue;
@@ -54,7 +54,6 @@ class Solution {
             }
             
             max = Math.max(max, localMax + same);
-            set.add(points[i][0] + "-" + points[i][1]);
         }
         
         

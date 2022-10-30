@@ -29,16 +29,16 @@ public class Codec {
                 break;
             ch = data.charAt(pos);
         }
+        
+        if(pos < data.length() && data.charAt(pos) == ',')
+            pos++;
+        
         return num * sign;
     }
     
     public TreeNode buildTree(String data){
         if(pos == data.length() || data == null)
             return null;
-        
-        if(data.charAt(pos) == ','){
-            pos++;
-        }
         
         if(data.charAt(pos) == 'N'){
             pos+=2;

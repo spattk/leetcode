@@ -8,36 +8,44 @@ class MedianFinder {
     }
     
     public void addNum(int num) {
-        if(maxHeap.isEmpty() && minHeap.isEmpty()){
-            maxHeap.add(num);
-        } else if(minHeap.isEmpty()) {
-            if(num >= maxHeap.peek()) {
-                minHeap.add(num);
-            } else {
-                maxHeap.add(num);
-                minHeap.add(maxHeap.poll());
-            }
-        } else {
-            //both are non empty
-            if(num > minHeap.peek()) {
+//         if(maxHeap.isEmpty() && minHeap.isEmpty()){
+//             maxHeap.add(num);
+//         } else if(minHeap.isEmpty()) {
+//             if(num >= maxHeap.peek()) {
+//                 minHeap.add(num);
+//             } else {
+//                 maxHeap.add(num);
+//                 minHeap.add(maxHeap.poll());
+//             }
+//         } else {
+//             //both are non empty
+//             if(num > minHeap.peek()) {
                 
-                if(minHeap.size() < maxHeap.size()) {
-                    minHeap.add(num);
-                } else {
-                    minHeap.add(num);
-                    maxHeap.add(minHeap.poll());
+//                 if(minHeap.size() < maxHeap.size()) {
+//                     minHeap.add(num);
+//                 } 
+//                 else {
+//                     minHeap.add(num);
+//                     maxHeap.add(minHeap.poll());
                     
-                }
+//                 }
                 
-            } else {
-                if(minHeap.size() < maxHeap.size()) {
-                    maxHeap.add(num);
-                    minHeap.add(maxHeap.poll());
+//             } else {
+//                 if(minHeap.size() < maxHeap.size()) {
+//                     maxHeap.add(num);
+//                     minHeap.add(maxHeap.poll());
                     
-                } else {
-                    maxHeap.add(num);
-                }
-            }
+//                 } else {
+//                     maxHeap.add(num);
+//                 }
+//             }
+//         }
+        
+        maxHeap.add(num);
+        minHeap.add(maxHeap.poll());
+        
+        if(maxHeap.size() < minHeap.size()){
+            maxHeap.add(minHeap.poll());
         }
     }
     

@@ -3,21 +3,21 @@
 class Solution {
     
     class TrieNode {
-        Map<Character, TrieNode> children;
+        TrieNode[] children;
         String word;
 
         TrieNode(){
-            children = new HashMap<>();
+            children = new TrieNode[26];
             word = null;
         }
 
         public void addWord(String word){
             TrieNode curr = root;
             for(char ch: word.toCharArray()){
-                if(curr.children.get(ch) == null){
-                    curr.children.put(ch, new TrieNode());
+                if(curr.children[ch-'a'] == null){
+                    curr.children[ch-'a'] = new TrieNode();
                 }
-                curr = curr.children.get(ch);
+                curr = curr.children[ch-'a'];
             }
             
             curr.word = word;
@@ -34,11 +34,11 @@ class Solution {
     public void dfs(int x, int y, TrieNode node, char[][] board, boolean[][]visited) {
         
         char ch = board[x][y];
-        if(node.children.get(ch) == null){
+        if(node.children[ch-'a'] == null){
             return;
         }
         
-        node = node.children.get(ch);
+        node = node.children[ch-'a'];
         if(node.word != null)
             answer.add(node.word);
         

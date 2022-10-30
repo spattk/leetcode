@@ -29,20 +29,18 @@ class Solution {
                     count--;
             }
             
-            if(count == 0){
-                while(i<=j && count == 0){
-                    if(j - i + 1 < len){
-                        len = j-i+1;
-                        startIdx = i;
-                    }
-                    ch = s.charAt(i);
-                    if(map.get(ch) != null) {
-                        map.put(ch, map.get(ch)+1);
-                        if(map.get(ch) == 1)
-                            count++;
-                    }
-                    i++;
+            while(i<=j && count == 0){
+                if(j - i + 1 < len){
+                    len = j-i+1;
+                    startIdx = i;
                 }
+                ch = s.charAt(i);
+                if(map.get(ch) != null) {
+                    map.put(ch, map.get(ch)+1);
+                    if(map.get(ch) == 1)
+                        count++;
+                }
+                i++;
             }
             
             j++;

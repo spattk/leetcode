@@ -30,7 +30,7 @@ class Solution {
         for(int i=0;i<4;i++){
             int nx = x + dx[i][0];
             int ny = y + dx[i][1];
-            if (isValid(nx, ny) && grid[nx][ny] != 0){
+            if (isValid(nx, ny)){
                 set.add(grid[nx][ny]);
             }
         }

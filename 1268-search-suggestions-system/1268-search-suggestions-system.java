@@ -2,11 +2,11 @@ class Solution {
     
     class TrieNode {
         TrieNode[] children;
-        boolean isWord;
+        String word;
         
         TrieNode(){
             children = new TrieNode[26];
-            isWord = false;
+            word = null;
         }
         
         void addWord(String word, TrieNode root){
@@ -19,44 +19,36 @@ class Solution {
                 curr = curr.children[ch-'a'];
             }
             
-            curr.isWord = true;
+            curr.word = word;
         }
         
-        void dfs(TrieNode curr, List<String> currList, List<Character> path){
+        void dfs(TrieNode curr, List<String> currList){
             if(currList.size() == 3){
                 return;
             }
             
-            if(curr.isWord){
-                StringBuilder sb = new StringBuilder();
-                for(char ch: path)
-                    sb.append(ch);
-                currList.add(sb.toString());
+            if(curr.word != null){
+                currList.add(curr.word);
             }
             
             for(int i=0; i<26; i++){
                 if(curr.children[i] != null){
-                    path.add((char)('a'+i));
-                    dfs(curr.children[i], currList, path);
-                    path.remove(path.size()-1);
-                    
+                    dfs(curr.children[i], currList);
                 }
             }
         }
         
         List<String> search(String word, TrieNode root, List<String> currList){
             TrieNode curr = root;
-            List<Character> path = new ArrayList<>();
             for(char ch: word.toCharArray()){
                 if(curr.children[ch-'a'] == null){
                     return new ArrayList<>();
                 }
                 
                 curr = curr.children[ch-'a'];
-                path.add(ch);
             }
             
-            dfs(curr, currList, path);
+            dfs(curr, currList);
             return currList;
         }
         

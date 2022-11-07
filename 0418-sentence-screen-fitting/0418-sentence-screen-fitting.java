@@ -1,6 +1,6 @@
 class Solution {
     public int wordsTyping(String[] sen, int rows, int cols) {
-     		//the main goal is to get the no of times the whole sentence is repeated starting from ith position
+     	//the main goal is to get the no of times the whole sentence is repeated starting from ith position
 	
 		int n = sen.length;
 		int[] times = new int[n];

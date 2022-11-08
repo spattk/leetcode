@@ -1,22 +1,62 @@
 class Solution {
-  public int longestLine(int[][] M) {
-    if (M.length == 0) return 0;
-    int ones = 0;
-    int[][][] dp = new int[M.length][M[0].length][4];
-    for (int i = 0; i < M.length; i++) {
-      for (int j = 0; j < M[0].length; j++) {
-        if (M[i][j] == 1) {
-          dp[i][j][0] = j > 0 ? dp[i][j - 1][0] + 1 : 1;
-          dp[i][j][1] = i > 0 ? dp[i - 1][j][1] + 1 : 1;
-          dp[i][j][2] = (i > 0 && j > 0) ? dp[i - 1][j - 1][2] + 1 : 1;
-          dp[i][j][3] = (i > 0 && j < M[0].length - 1) ? dp[i - 1][j + 1][3] + 1 : 1;
-          ones =
-              Math.max(
-                  ones,
-                  Math.max(Math.max(dp[i][j][0], dp[i][j][1]), Math.max(dp[i][j][2], dp[i][j][3])));
-        }
-      }
-    }
-    return ones;
-  }
+	int r,c;
+	public void copyToPrevRow(int[][][]dp){
+		int y = dp[0].length;
+		int z = 4;
+
+		for(int j=0; j<y; j++){
+			for(int k=0; k<4; k++){
+				dp[0][j][k] = dp[1][j][k];
+			}
+		}
+	}
+
+    	public int longestLine(int[][] mat) {
+		r = mat.length;
+		c = mat[0].length;
+
+		int[][][]dp = new int[2][c][4];
+		int maxOnes = 0;
+
+// 		for(int j=0; j<c; j++){
+// 			for(int k=0; k<4; k++){
+// 				dp[0][j][k] = mat[0][j];
+// 			}
+// 		}
+
+		for(int i=0; i<r; i++){
+			for(int j=0; j<c; j++){
+				if(mat[i][j] == 1){
+					//horizontal
+					if(j > 0) dp[1][j][0] = 1 + dp[1][j-1][0];
+                    else dp[1][j][0] = 1;
+					maxOnes = Math.max(maxOnes, dp[1][j][0]);
+
+					//vertical
+					dp[1][j][1] = 1 + dp[0][j][1];
+					maxOnes = Math.max(maxOnes, dp[1][j][1]);
+
+					//diag
+					if(j > 0) dp[1][j][2] = 1+ dp[0][j-1][2];
+                    else dp[1][j][2] = 1;
+					maxOnes = Math.max(maxOnes, dp[1][j][2]);
+
+					//anti-diag
+					if(j + 1 < c) dp[1][j][3] = 1 + dp[0][j+1][3];
+                    else dp[1][j][3] = 1;
+					maxOnes = Math.max(maxOnes, dp[1][j][3]);
+				}
+				else {
+					dp[1][j][0] = dp[1][j][1] = dp[1][j][2] = dp[1][j][3] = 0;
+				}
+			}
+
+			//assign row 1 to row 0
+			copyToPrevRow(dp);
+		}
+
+		return maxOnes;
+    	}
 }
+
+

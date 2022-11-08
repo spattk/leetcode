@@ -23,7 +23,7 @@ class Solution {
     public int toInt(String s){
         int ret = 0;
         for(char c : s.toCharArray()){
-            ret += (1<<(c-'a'));
+            ret += 1<<(c-'a');
         }
         return ret;
     }

@@ -11,8 +11,11 @@ class Solution {
 		char c1 = Character.toLowerCase(st.peek());
 		char c2 = Character.toLowerCase(ch);
         
+        int i1 = (int)st.peek();
+        int i2 = (int)ch;
+        
 	
-		return (!(c1 == c2 && (isDiff(st.peek(), ch) ||  isDiff(ch, st.peek()))));
+		return (!(c1 == c2 && Math.abs(i1-i2) == 32) );
 	}
     
     public String processStack(Stack<Character> st){

@@ -2,9 +2,8 @@ class Solution {
 	int r,c;
 	public void copyToPrevRow(int[][][]dp){
 		int y = dp[0].length;
-		int z = 4;
 
-		for(int j=0; j<y; j++){
+        for(int j=0; j<y; j++){
 			for(int k=0; k<4; k++){
 				dp[0][j][k] = dp[1][j][k];
 			}
@@ -17,12 +16,6 @@ class Solution {
 
 		int[][][]dp = new int[2][c][4];
 		int maxOnes = 0;
-
-// 		for(int j=0; j<c; j++){
-// 			for(int k=0; k<4; k++){
-// 				dp[0][j][k] = mat[0][j];
-// 			}
-// 		}
 
 		for(int i=0; i<r; i++){
 			for(int j=0; j<c; j++){
@@ -56,7 +49,7 @@ class Solution {
 		}
 
 		return maxOnes;
-    	}
+    }
 }
 
 

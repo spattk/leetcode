@@ -21,30 +21,28 @@ class Solution {
 		return x>=0 && x<r && y >=0 && y<c;
 	}
 
-	public int pathCounter(int x, int y, int [][] grid, boolean[][] visited, int remain){
+	public void pathCounter(int x, int y, int [][] grid, boolean[][] visited, int remain){
 
         if(!isSafe(x, y) || visited[x][y] || grid[x][y] == -1 || grid[x][y] == 1)
-            return 0;
+            return;
 		
 		if(grid[x][y] == 2 && remain == 0){
-            return 1;
+            ans ++;
+            return;
         }
         
         if(remain == 0)
-            return 0;
+            return;
 
         visited[x][y] = true;
         
-        int count = 0;
 		for(int i=0; i<dir.length; i++){
 			int nx = x + dir[i][0];
-			int ny = y + dir[i][1];
-                
-            count += pathCounter(nx, ny, grid, visited, remain - 1);
+			int ny = y + dir[i][1];                
+            pathCounter(nx, ny, grid, visited, remain - 1);
 		}
         
         visited[x][y] = false;
-        return count;
 	}
 
     public int uniquePathsIII(int[][] grid) {
@@ -52,10 +50,12 @@ class Solution {
 		c = grid[0].length;
 		visited = new boolean[r][c];
 		init(grid);
-		return pathCounter(start[0], start[1] + 1, grid, visited, empty) +
-            pathCounter(start[0] + 1, start[1], grid, visited, empty) +
-            pathCounter(start[0]- 1, start[1], grid, visited, empty) + 
-            pathCounter(start[0], start[1] -1, grid, visited, empty);
+		pathCounter(start[0], start[1] + 1, grid, visited, empty);
+        pathCounter(start[0] + 1, start[1], grid, visited, empty);
+        pathCounter(start[0]- 1, start[1], grid, visited, empty);
+        pathCounter(start[0], start[1] -1, grid, visited, empty);
+        
+        return ans;
     }
 }
 

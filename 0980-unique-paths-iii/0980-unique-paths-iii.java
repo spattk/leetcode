@@ -23,16 +23,13 @@ class Solution {
 
 	public void pathCounter(int x, int y, int [][] grid, boolean[][] visited){
 
-        if(!isSafe(x, y) || visited[x][y] || grid[x][y] == -1)
+        if(!isSafe(x, y) || visited[x][y] || grid[x][y] == -1 || empty < -1)
             return;
 		
 		if(grid[x][y] == 2 && empty == -1){
             ans++;
             return;
         }
-        
-        if(grid[x][y] == 2 || empty < 0)
-            return;
 
         visited[x][y] = true;
         empty--;

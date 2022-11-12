@@ -9,11 +9,13 @@ class MedianFinder {
     
     public void addNum(int num) {
         
-        maxHeap.add(num);
-        minHeap.add(maxHeap.poll());
+        minHeap.add(num);
+        maxHeap.add(minHeap.poll());
         
-        if(maxHeap.size() < minHeap.size()){
-            maxHeap.add(minHeap.poll());
+        
+        if(maxHeap.size() > minHeap.size()){
+            // maxHeap.add(minHeap.poll());
+            minHeap.add(maxHeap.poll());
         }
     }
     
@@ -26,7 +28,7 @@ class MedianFinder {
             sum = maxHeap.peek() + minHeap.peek();
             return sum/2.0;
         } else {
-            sum = maxHeap.peek();
+            sum = minHeap.peek();
             return sum * 1.0;
         }
         

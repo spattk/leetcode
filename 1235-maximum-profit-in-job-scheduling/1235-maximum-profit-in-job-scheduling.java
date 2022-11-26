@@ -1,68 +1,65 @@
 class Solution {
-    // maximum number of jobs are 50000
-    int[] memo = new int[50001];
+    //stores the max profit when we start at index i
+    Integer[] memo;
+    Integer[] starts;
+    int n;
     
-    private int findNextJob(int[] startTime, int lastEndingTime) {
-        int start = 0, end = startTime.length - 1, nextIndex = startTime.length;
-        
-        while (start <= end) {
-            int mid = (start + end) / 2;
-            if (startTime[mid] >= lastEndingTime) {
-                nextIndex = mid;
-                end = mid - 1;
-            } else {
-                start = mid + 1;
+    public int getNextNonConflictingJob(List<int[]> jobs, int idx){
+        int newIdx = jobs.size();
+        int low = 0, high = jobs.size() - 1;
+        while(low <= high){
+            int mid = (low + high)/2;
+            if(jobs.get(mid)[0] >= jobs.get(idx)[1]){
+                newIdx = mid;
+                high = mid-1;
+            }
+            else{
+                low = mid+1;
             }
         }
-        return nextIndex;
+        
+        return newIdx;
     }
     
-    private int findMaxProfit(List<List<Integer>> jobs, int[] startTime, int n, int position) {
-        // 0 profit if we have already iterated over all the jobs
-        if (position == n) {
+    public int maxProfitUtil(List<int[]> jobs, int idx){
+        if(idx == n)
             return 0;
+        
+        if(memo[idx] != null)
+            return memo[idx];
+        
+        int nextNonConflictingIdx = getNextNonConflictingJob(jobs, idx);
+        
+        //take the current one or skip
+        int result =  Math.max(
+            jobs.get(idx)[2] + maxProfitUtil(jobs, nextNonConflictingIdx),
+            maxProfitUtil(jobs, idx+1)
+        );
+        
+        return memo[idx] = result;
+    }
+    
+    public void fillStartTime(List<int[]> jobs ){
+        int i=0;
+        for(int [] j: jobs){
+            starts[i++] = j[0];
         }
-        
-        // return result directly if it's calculated 
-        if (memo[position] != -1) {
-            return memo[position];
-        }
-        
-        // nextIndex is the index of next non-conflicting job
-        int nextIndex = findNextJob(startTime, jobs.get(position).get(1));
-        
-        // find the maximum profit of our two options: skipping or scheduling the current job
-        int maxProfit = Math.max(findMaxProfit(jobs, startTime, n, position + 1), 
-                        jobs.get(position).get(2) + findMaxProfit(jobs, startTime, n, nextIndex));
-        
-        // return maximum profit and also store it for future reference (memoization)
-        return memo[position] = maxProfit;
     }
     
     public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
-        List<List<Integer>> jobs = new ArrayList<>();
+        List<int[]> jobs = new ArrayList<>();
+        n = profit.length;
+        memo = new Integer[n];
+        starts = new Integer[n];
         
-        // marking all values to -1 so that we can differentiate 
-        // if we have already calculated the answer or not
-        Arrays.fill(memo, -1);
-        
-        // storing job's details into one list 
-        // this will help in sorting the jobs while maintaining the other parameters
-        int length = profit.length;
-        for (int i = 0; i < length; i++) {
-            ArrayList<Integer> currJob = new ArrayList<>();
-            currJob.add(startTime[i]);
-            currJob.add(endTime[i]);
-            currJob.add(profit[i]);
-            jobs.add(currJob);
-        }
-        jobs.sort(Comparator.comparingInt(a -> a.get(0)));
-        
-        // binary search will be used in startTime so store it as separate list
-        for (int i = 0; i < length; i++) {
-            startTime[i] = jobs.get(i).get(0);
+        for(int i=0; i<n; i++){
+            int[] j = new int[]{startTime[i], endTime[i], profit[i]};
+            jobs.add(j);
         }
         
-        return findMaxProfit(jobs, startTime, length, 0);
+        jobs.sort((a,b)->a[0]-b[0]);
+        fillStartTime(jobs);
+        
+        return maxProfitUtil(jobs, 0);
     }
 }

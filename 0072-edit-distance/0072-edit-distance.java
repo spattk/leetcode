@@ -1,9 +1,8 @@
 class Solution {
 	int n1, n2;
-	Map<Pair<Integer, Integer>, Integer> dp;
+    Integer[][] dp;
 	public int util(char[] w1, char[] w2, int i, int j){
 
-		Pair pair = new Pair(i, j);
 		if(i>= n1 && j >= n2){
 			return 0;
 		}
@@ -16,8 +15,8 @@ class Solution {
 			return n1 - i;
 		}
 
-		if(dp.get(pair)!= null)
-			return dp.get(pair);
+        if(dp[i][j] != null)
+            return dp[i][j];
 
 		int result;
 		if(w1[i] == w2[j]){
@@ -34,15 +33,14 @@ class Solution {
 		}
 
 
-		dp.put(pair, result);
-		return result;
+		return dp[i][j] = result;
 
 	}
     	public int minDistance(String word1, String word2) {
      		n1 = word1.length();
-		n2 = word2.length();
-		dp = new HashMap<>();
-		return util(word1.toCharArray(), word2.toCharArray(), 0, 0);
+            n2 = word2.length();
+            dp = new Integer[n1+1][n2+1];
+            return util(word1.toCharArray(), word2.toCharArray(), 0, 0);
     	}
 }
 

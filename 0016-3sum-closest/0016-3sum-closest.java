@@ -1,34 +1,30 @@
 class Solution {
     public int threeSumClosest(int[] nums, int target) {
         Arrays.sort(nums);
+        int min = Integer.MAX_VALUE;
+        int closest = -1;
         int n = nums.length;
-        int closest = Integer.MAX_VALUE;
-        for(int i=0; i<=n-3; i++){
-            int temp = Integer.MAX_VALUE;
-            int sum = 0;
-            int j = i+1, k = n-1;
-            while(j < k){
-                if((nums[i] + nums[j] + nums[k]) == target){
-                    return target;
-                } else if((nums[i] + nums[j] + nums[k]) < target) {
-                    sum = (nums[i] + nums[j] + nums[k]);
-                    j++;
-                    
-                    if(Math.abs(target - sum) < Math.abs(target - temp)){
-                        temp = sum;
-                    }
-                } else {
-                    sum = (nums[i] + nums[j] + nums[k]);
-                    k--;
-                    
-                    if(Math.abs(target - sum) < Math.abs(target - temp)){
-                        temp = sum;
-                    }
-                }
-            }
+        for(int i=0; i<n-2; i++){
+            int l = i + 1;
+            int r = n - 1;
             
-            if(Math.abs(target - temp) < Math.abs(target - closest)){
-                closest = temp;
+            while(l < r){
+                int threeSum = nums[i] + nums[l] + nums[r];
+                
+                if(Math.abs(threeSum - target) < min){
+                    min = Math.abs(threeSum - target);
+                    closest = threeSum;
+                    
+                    if(min == 0)
+                        return closest;
+                }
+                
+                if(threeSum < target){
+                    l++;
+                }
+                else if (threeSum > target){
+                    r--;
+                }
             }
         }
         

@@ -1,8 +1,9 @@
 class Solution {
     public int getVowelCount(String s, int start, int end, Set<Character> vowels){
         int count = 0;
+        char[] chs = s.toCharArray();
         for(int i=start; i<end; i++){
-            if(vowels.contains(s.charAt(i)))
+            if(vowels.contains(chs[i]))
                 count++;
         }
         return count;

@@ -1,44 +1,61 @@
 class Solution {
-    public boolean bfs(int source, Map<Integer, List<Integer>> adj, int[] color) {
+    
+    Map<Integer, Set<Integer>> adj;
+    int[] colors;
+    int[][] dislikes;
+    
+    int n;
+    
+    public void init(){
+        adj = new HashMap<>();
+        colors = new int[n+1];
+        for(int[] dis: dislikes){
+            adj.putIfAbsent(dis[0], new HashSet<>());
+            adj.putIfAbsent(dis[1], new HashSet<>());
+            
+            adj.get(dis[0]).add(dis[1]);
+            adj.get(dis[1]).add(dis[0]);
+        }
+        
+        Arrays.fill(colors, -1);
+    }
+    
+    public boolean bfs(int src){
+        
         Queue<Integer> q = new LinkedList<>();
-        q.offer(source);
-        color[source] = 0; // Start with marking source as `RED`.
-
-        while (!q.isEmpty()) {
-            int node = q.poll();
-            if (!adj.containsKey(node))
-                continue;
-            for (int neighbor : adj.get(node)) {
-                if (color[neighbor] == color[node])
-                    return false;
-                if (color[neighbor] == -1) {
-                    color[neighbor] = 1 - color[node];
-                    q.add(neighbor);
+        colors[src] = 0;
+        q.add(src);
+        
+        while(!q.isEmpty()){
+            int curr = q.poll();
+            int currColor = colors[curr];
+            
+            for(int nei: adj.getOrDefault(curr, new HashSet<>())){
+                if(colors[nei] == -1){
+                    colors[nei] = 1 - currColor;
+                    q.add(nei);
+                }
+                else {
+                    if(colors[nei] != 1-currColor)
+                        return false;
                 }
             }
         }
+        
         return true;
     }
-
+    
     public boolean possibleBipartition(int n, int[][] dislikes) {
-        Map<Integer, List<Integer>> adj = new HashMap<>();
-        for (int[] edge : dislikes) {
-            int a = edge[0], b = edge[1];
-            adj.computeIfAbsent(a, value -> new ArrayList<Integer>()).add(b);
-            adj.computeIfAbsent(b, value -> new ArrayList<Integer>()).add(a);
-        }
-
-        int[] color = new int[n + 1];
-        Arrays.fill(color, -1); // 0 stands for red and 1 stands for blue.
-
-        for (int i = 1; i <= n; i++) {
-            if (color[i] == -1) {
-                // For each pending component, run BFS.
-                if (!bfs(i, adj, color))
-                    // Return false, if there is conflict in the component.
+        this.dislikes = dislikes;
+        this.n = n;
+        init();
+        
+        for(int i=0; i<n; i++){
+            if(colors[i] == -1)
+                if(!bfs(i))
                     return false;
-            }
         }
+        
         return true;
     }
 }

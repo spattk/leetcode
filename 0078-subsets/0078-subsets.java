@@ -4,19 +4,19 @@ class Solution {
     List<Integer> currentState = new ArrayList<>();
     
     public void solve(int[] nums, int idx) {
-    
-        //base condition
-        result.add(new ArrayList<>(currentState));
         
-        for(int i=idx; i<nums.length; i++) {
-            currentState.add(nums[i]);
-            solve(nums, i+1);
-            currentState.remove(currentState.size() - 1);
+        if(idx == nums.length){
+            result.add(new ArrayList<>(currentState));
+            return;
         }
         
+        //add
+        currentState.add(nums[idx]);
+        solve(nums, idx+1);
+        currentState.remove(currentState.size() - 1);
         
-        
-        
+        //don't add
+        solve(nums, idx+1);
     }
     
     public List<List<Integer>> subsets(int[] nums) {

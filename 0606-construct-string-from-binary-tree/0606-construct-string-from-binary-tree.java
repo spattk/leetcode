@@ -17,16 +17,14 @@ class Solution {
     
     StringBuilder sb = new StringBuilder();
     
-    public void treeUtil(TreeNode root, StringBuilder sb, boolean isOpen) {
+    public void treeUtil(TreeNode root, StringBuilder sb) {
         
         sb.append("(");
         sb.append("" + root.val);
         
         
         if(root.left == null && root.right == null) {
-            if(isOpen) {
-                sb.append(")");
-            }
+            sb.append(")");
             return;
         }
         
@@ -35,18 +33,18 @@ class Solution {
         }
         
         if(root.left != null) {
-            treeUtil(root.left, sb, true);
+            treeUtil(root.left, sb);
         }
         
         if(root.right != null) {
-            treeUtil(root.right, sb, true);
+            treeUtil(root.right, sb);
         }
         
         sb.append(")");
     }
     
     public String tree2str(TreeNode root) {
-        treeUtil(root, sb, true);
+        treeUtil(root, sb);
         
         String str= sb.toString();
         return str.substring(1, str.length()-1);

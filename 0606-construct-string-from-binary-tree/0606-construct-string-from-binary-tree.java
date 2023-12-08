@@ -17,36 +17,33 @@ class Solution {
     
     StringBuilder sb = new StringBuilder();
     
-    public void treeUtil(TreeNode root, StringBuilder sb) {
+    public void treeUtil(TreeNode root) {
+
+        if(root == null)
+            return;
         
-        sb.append("(");
         sb.append("" + root.val);
         
         
         if(root.left == null && root.right == null) {
-            sb.append(")");
             return;
         }
         
-        if(root.left == null && root.right != null){
-            sb.append("()");
-        }
-        
-        if(root.left != null) {
-            treeUtil(root.left, sb);
+        if(root.left != null || root.right != null){
+            sb.append("(");
+            treeUtil(root.left);
+            sb.append(")");
         }
         
         if(root.right != null) {
-            treeUtil(root.right, sb);
+            sb.append("(");
+            treeUtil(root.right);
+            sb.append(")");
         }
-        
-        sb.append(")");
     }
     
     public String tree2str(TreeNode root) {
-        treeUtil(root, sb);
-        
-        String str= sb.toString();
-        return str.substring(1, str.length()-1);
+        treeUtil(root);
+        return sb.toString();
     }
 }

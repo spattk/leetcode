@@ -20,11 +20,6 @@ class Solution {
         
         else {
             
-            while(j >=0 && nums[j] == val) {
-                count--;
-                j--;
-            }
-            
             while (i <= j) {
                 while(j >=0 && nums[j] == val) {
                     count--;

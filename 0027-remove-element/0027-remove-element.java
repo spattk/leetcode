@@ -1,7 +1,5 @@
 class Solution {
     public int removeElement(int[] nums, int val) {
-        
-        
         int n = nums.length;
         int i =0, j=n-1;
         int count = n;
@@ -10,7 +8,7 @@ class Solution {
             return 0;
         }
         
-        else if (n == 1){
+        if (n == 1){
             if (nums[0] == val){
                 return 0;
             }
@@ -18,33 +16,32 @@ class Solution {
                 return 1;
         }
         
-        else {
             
-            while (i <= j) {
-                while(j >=0 && nums[j] == val) {
-                    count--;
-                    j--;
-                }
-                
-                if ( i > j)
-                break;
-                
-                if(nums[i] == val) {
-                    //swap
-                    int temp = nums[i];
-                    nums[i] = nums[j];
-                    nums[j] = temp;
+        while (i <= j) {
+            while(j >=0 && nums[j] == val) {
+                count--;
+                j--;
+            }
 
-                    j--;
-                    i++;
-                    count-- ;
-                }
+            if ( i > j)
+            break;
 
-                else {
-                    i++;
-                }
+            if(nums[i] == val) {
+                //swap
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+
+                j--;
+                i++;
+                count-- ;
+            }
+
+            else {
+                i++;
             }
         }
+        
         
         return count;
     }
